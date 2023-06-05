@@ -1,16 +1,17 @@
-
 package mvc.config;
 
+import mvc.config.listener.AppContextListener;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+
 import javax.servlet.FilterRegistration;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
-public class AppInit extends AbstractAnnotationConfigDispatcherServletInitializer {
+public class ApplicationInit extends AbstractAnnotationConfigDispatcherServletInitializer {
 
-    public AppInit() {
+    public ApplicationInit() {
         super();
     }
 
@@ -25,7 +26,6 @@ public class AppInit extends AbstractAnnotationConfigDispatcherServletInitialize
     }
 
     @Override
-    @SuppressWarnings("NullableProblems")
     protected String[] getServletMappings() {
         return new String[] {"/"};
     }
@@ -39,5 +39,7 @@ public class AppInit extends AbstractAnnotationConfigDispatcherServletInitialize
         filterRegistration.addMappingForUrlPatterns(null, false, "/*");
         filterRegistration = servletContext.addFilter("hiddenHttpMethodFilter", new HiddenHttpMethodFilter() );
         filterRegistration.addMappingForUrlPatterns(null, false, "/*");
+
+        servletContext.addListener(AppContextListener.class);
     }
 }
