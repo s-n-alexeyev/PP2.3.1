@@ -1,12 +1,13 @@
 package mvc.controller;
 
+import mvc.model.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import mvc.model.User;
 import mvc.service.UserService;
+
 import javax.validation.Valid;
 
 @Controller
@@ -32,12 +33,12 @@ public class UsersController {
 	}
 
 	@GetMapping("/{id}/edit")
-	public String edidtUserForm(@PathVariable(value = "id") long id, Model model,
+	public String edidtUserForm(@PathVariable(value = "id", required = true) long id, Model model,
 								RedirectAttributes attributes) {
 		User user = userService.readUser(id);
 
 		if (null == user) {
-			attributes.addFlashAttribute("flashMessage", "Пользователь не существует!");
+			attributes.addFlashAttribute("flashMessage", "User are not exists!");
 			return "redirect:/users";
 		}
 
@@ -54,18 +55,18 @@ public class UsersController {
 
 		userService.createOrUpdateUser(user);
 		attributes.addFlashAttribute("flashMessage",
-				"User " + user.getFirstName() + " успешно создан!");
+				"User " + user.getFirstName() + " successfully created!");
 		return "redirect:/users";
 	}
 
 	@GetMapping("/delete")
-	public String deleteUser(@RequestParam(value = "id", defaultValue = "") long id,
-							 RedirectAttributes attributes) {
+	public String deleteUser(@RequestParam(value = "id", required = true, defaultValue = "") long id,
+								   RedirectAttributes attributes) {
 		User user = userService.deleteUser(id);
 
 		attributes.addFlashAttribute("flashMessage", (null == user) ?
 				"User are not exists!" :
-				"User " + user.getFirstName() + " успешно удален!");
+				"User " + user.getFirstName() + " successfully deleted!");
 
 		return "redirect:/users";
 	}

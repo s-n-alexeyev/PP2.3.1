@@ -1,9 +1,9 @@
-
 package mvc.config;
 
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+
 import javax.servlet.FilterRegistration;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -25,7 +25,6 @@ public class AppInit extends AbstractAnnotationConfigDispatcherServletInitialize
     }
 
     @Override
-    @SuppressWarnings("NullableProblems")
     protected String[] getServletMappings() {
         return new String[] {"/"};
     }
@@ -39,5 +38,6 @@ public class AppInit extends AbstractAnnotationConfigDispatcherServletInitialize
         filterRegistration.addMappingForUrlPatterns(null, false, "/*");
         filterRegistration = servletContext.addFilter("hiddenHttpMethodFilter", new HiddenHttpMethodFilter() );
         filterRegistration.addMappingForUrlPatterns(null, false, "/*");
+
     }
 }
