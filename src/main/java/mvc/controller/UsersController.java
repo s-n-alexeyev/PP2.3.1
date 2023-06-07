@@ -7,7 +7,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import mvc.service.UserService;
-
 import javax.validation.Valid;
 
 @Controller
@@ -55,7 +54,7 @@ public class UsersController {
 
 		userService.createOrUpdateUser(user);
 		attributes.addFlashAttribute("flashMessage",
-				"User " + user.getFirstName() + " successfully created!");
+				"Пользователь " + user.getFirstName() + " успешно создан/обновлен!");
 		return "redirect:/users";
 	}
 
