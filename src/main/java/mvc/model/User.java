@@ -3,6 +3,7 @@ package mvc.model;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -15,6 +16,7 @@ public class User {
 
     @Column(name = "first_name")
     @NotEmpty(message = "Имя не должно быть пустым")
+    @Pattern(regexp = "^[a-zA-Zа-яА-ЯёЁ]+$", message = "Введите только буквы")
     @Size(min = 2, max = 30, message = "Имя должно быть в переделах от 2 до 30")
     private String firstName;
 
