@@ -25,6 +25,7 @@ public class User {
     private String email;
 
     @NotEmpty(message = "Пароль не должен быть пустым")
+    @Size(min = 6, max = 30, message = "Пароль должен быть в переделах от 6 до 30")
     private String password;
 
     public User() {

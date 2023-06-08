@@ -2,13 +2,12 @@ package mvc.repository;
 
 import org.springframework.stereotype.Repository;
 import mvc.model.User;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
-public class UserDaoImpl implements UserDao {
+public class UserRepositoryImp implements UserRepository {
 
     @PersistenceContext
     private EntityManager entityManager;
