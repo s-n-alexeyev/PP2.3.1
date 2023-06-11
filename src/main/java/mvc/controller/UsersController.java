@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import mvc.service.UserService;
 import javax.validation.Valid;
 
@@ -20,7 +19,7 @@ public class UsersController {
     }
 
     @GetMapping({"", "/", "list"})
-    public String showAllUsers(Model model, @ModelAttribute("flashMessage") String flashAttribute) {
+    public String showAllUsers(Model model) {
         model.addAttribute("users", userService.getAllUsers());
         return "list";
     }
@@ -31,40 +30,26 @@ public class UsersController {
     }
 
     @GetMapping("/{id}/edit")
-    public String edidtUserForm(@PathVariable(value = "id") long id, Model model,
-                                RedirectAttributes attributes) {
+    public String edidtUserForm(@PathVariable(value = "id") long id, Model model) {
         User user = userService.readUser(id);
-
-        if (null == user) {
-            attributes.addFlashAttribute("flashMessage", "Пользователь отсутствует!");
-            return "redirect:/users";
-        }
 
         model.addAttribute("user", userService.readUser(id));
         return "form";
     }
 
     @PostMapping()
-    public String saveUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult,
-                           RedirectAttributes attributes) {
+    public String saveUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "form";
         }
-
         userService.createOrUpdateUser(user);
-        attributes.addFlashAttribute("flashMessage",
-                "Пользователь " + user.getFirstName() + " успешно создан/обновлен!");
+
         return "redirect:/users";
     }
 
     @GetMapping("/delete")
-    public String deleteUser(@RequestParam(value = "id", defaultValue = "") long id, RedirectAttributes attributes) {
+    public String deleteUser(@RequestParam(value = "id") long id) {
         User user = userService.deleteUser(id);
-
-        attributes.addFlashAttribute("flashMessage",
-                (user == null) ?
-                        "Пользователь не найден!" :
-                        "Пользователь " + user.getFirstName() + " успешно удален!");
 
         return "redirect:/users";
     }
